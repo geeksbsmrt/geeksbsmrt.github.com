@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+    <!--
+    Adam Crawford
+    VFW 1211
+    WebApp Part 1
+    10/25/2012
+    -->
+<html>
+    <head>
+        <!-- Meta data -->
+        <meta charset="utf-8" />
+        <meta name="description" content="Create a new game and assign referees" />
+        <meta name="keyword" content="assign, schedule, soccer, sport, referee, match, game, contest" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width" />
+        <!-- Title is visible in browser -->
+        <title>Add a Game</title>
+    </head>
+    <body>
+        <!-- Content -->
+        <header>
+            <hgroup>
+                <h1>Create a New Game</h1>
+                <h2>Allows creation of a new match and referee assignment</h2>
+            </hgroup>
+        </header>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Game Information</legend>
+                <ul>
+                    <li><label for="gdate">Game Date: </label><input type="date" id="gdate" /></li>
+                    <li><label for="gtime">Game Time: </label><input type="time" id="gtime" /></li>
+                    <li><label for="gfield">Game Field: </label><input type="text" id="gfield" /></li>
+                    <li>
+                        <label for="gage">Age Group: </label>
+                        <select id="gage">
+                            <optgroup label="Age">
+                                <option value="6">U6</option>
+                                <option value="8">U8</option>
+                                <option value="10">U10</option>
+                                <option value="12">U12</option>
+                                <option value="14">U14</option>
+                                <option value="18">U18</option>
+                            </optgroup>
+                        </select>
+                    </li>
+                    <li>Gender:
+                        <ul>
+                            <li><input type="radio" checked value="Boys" id="boys" name="gender" /><label for="boys"> Boys</label></li>
+                            <li><input type="radio" value="Girls" id="girls" name="gender" /><label for="girls"> Girls</label></li>
+                        </ul>
+                    </li>
+                    <li><label for="gcomp">Competitive </label><input type="checkbox" value="Competitive" id="gcomp" /></li>
+                    <li><label for="ghome">Home Team: </label><input type="text" id="ghome" /></li>
+                    <li><label for="gaway">Away Team: </label><input type="text" id="gaway" /></li>
+                    <li><label for="gspec">Any special considerations for this match? </label><textarea id="gspec"></textarea></li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Referee Information</legend>
+                <ul>
+                    <li>Referee:
+                        <ul>
+                            <li><label for="refname">Name: </label><input type="text" id="refname" /></li>
+                            <li><label for="refgrade">Grade: </label><input type="number" id="refgrade" min="1" max="15" value="8"/></li>
+                            <li><label for="refyrs">Years Reffing: </label><input type="range" id="refyrs" min="0" max="10" step="1" value="0" /></li>
+                            <li><label for="refemail">Email: </label><input type="email" id="refemail" placeholder="email@domain.com"/></li>
+                        </ul>
+                    </li>
+                    <li>Assistant Referee 1:
+                        <ul>
+                            <li><label for="ar1name">Name: </label><input type="text" id="ar1name" /></li>
+                            <li><label for="ar1grade">Grade: </label><input type="number" id="ar1grade" min="1" max="15" value="8"/></li>
+                            <li><label for="ar1yrs">Years Reffing: </label><input type="range" id="ar1yrs" min="0" max="10" step="1" value="0" /></li>
+                            <li><label for="ar1email">Email: </label><input type="email" id="ar1email" placeholder="email@domain.com"/></li>
+                        </ul>
+                    </li>
+                    <li>Assistant Referee 2:
+                        <ul>
+                            <li><label for="ar2name">Name: </label><input type="text" id="ar2name" /></li>
+                            <li><label for="ar2grade">Grade: </label><input type="number" id="ar2grade" min="1" max="15" value="8"/></li>
+                            <li><label for="ar2yrs">Years Reffing: </label><input type="range" id="ar2yrs" min="0" max="10" step="1" value="0" /></li>
+                            <li><label for="ar2email">Email: </label><input type="email" id="ar2email" placeholder="email@domain.com"/></li>
+                        </ul>
+                    </li>
+                </ul>
+            </fieldset>
+            <input type="hidden" value="true" />
+            <input type="submit" value="Create Game" />
+            <a href="#">Display Schedule</a>
+            <a href="#">Clear Schedule</a>
+        </form>
+    </body>
+</html>
