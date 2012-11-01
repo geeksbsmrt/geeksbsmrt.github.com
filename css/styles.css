@@ -1,0 +1,41 @@
+html { 
+	background: url(../img/field.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+    width: auto;
+}
+body {
+    font-family: "Arial New", Arial, sans-serif;
+}
+h1 {
+    text-shadow: 2px 2px grey;
+    margin: 0px;
+}
+h2 {
+    text-shadow: 2px 2px grey;
+    margin: 0px;
+}
+textarea {
+    display: block;
+}
+ul {
+    list-style: none;
+}
+#data ul {
+    padding: 10px;
+}
+#data ul li {
+    list-style: disc;
+}
+#data ul ul li {
+    list-style: circle;
+}
+.required {
+    outline: red solid 2px;
+}
+fieldset {
+    border: hidden;
+    padding: 0px;
+}
+legend {
+    font-weight: bold;
+}
