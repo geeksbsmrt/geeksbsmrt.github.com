@@ -2,8 +2,8 @@
     <!--
     Adam Crawford
     VFW 1211
-    WebApp Part 1
-    10/25/2012
+    WebApp Part 3
+    11/4/2012
     -->
 <html>
     <head>
@@ -17,7 +17,7 @@
         <!-- Title is visible in browser -->
         <title>Add a Game</title>
     </head>
-    <body>
+    <body id="add">
         <!-- Content -->
         <header>
             <hgroup>
@@ -25,6 +25,7 @@
                 <h2>Allows creation of a new match and referee assignment</h2>
             </hgroup>
         </header>
+        <ul id="errors"></ul>
                 <form action="#" method="post" id="createGame">
             <fieldset>
                 <legend>Game Information</legend>
@@ -52,7 +53,7 @@
                         <ul>
                             <li><label for="refname">Name: </label><input type="text" id="refname" /></li>
                             <li><label for="refgrade">Grade: </label><input type="number" id="refgrade" min="1" max="15" value="8"/></li>
-                            <li><label for="refyrs">Years Reffing (at least): </label><input type="range" id="refyrs" min="0" max="10" step="1" value="0" /></li>
+                            <li><label for="refyrs">Years of Experience: </label><input type="range" id="refyrs" min="0" max="10" step="1" value="0" /><div id="refSliderText" class="slider"></div></li>
                             <li><label for="refemail">Email: </label><input type="email" id="refemail" placeholder="email@domain.com"/></li>
                         </ul>
                     </li>
@@ -60,7 +61,7 @@
                         <ul>
                             <li><label for="ar1name">Name: </label><input type="text" id="ar1name" /></li>
                             <li><label for="ar1grade">Grade: </label><input type="number" id="ar1grade" min="1" max="15" value="8"/></li>
-                            <li><label for="ar1yrs">Years Reffing (at least): </label><input type="range" id="ar1yrs" min="0" max="10" step="1" value="0" /></li>
+                            <li><label for="ar1yrs">Years of Experience: </label><input type="range" id="ar1yrs" min="0" max="10" step="1" value="0" /><div id="ar1SliderText" class="slider"></div></li>
                             <li><label for="ar1email">Email: </label><input type="email" id="ar1email" placeholder="email@domain.com"/></li>
                         </ul>
                     </li>
@@ -68,7 +69,7 @@
                         <ul>
                             <li><label for="ar2name">Name: </label><input type="text" id="ar2name" /></li>
                             <li><label for="ar2grade">Grade: </label><input type="number" id="ar2grade" min="1" max="15" value="8"/></li>
-                            <li><label for="ar2yrs">Years Reffing (at least): </label><input type="range" id="ar2yrs" min="0" max="10" step="1" value="0" /></li>
+                            <li><label for="ar2yrs">Years of Experience: </label><input type="range" id="ar2yrs" min="0" max="10" step="1" value="0" /><div id="ar2SliderText" class="slider"></div></li>
                             <li><label for="ar2email">Email: </label><input type="email" id="ar2email" placeholder="email@domain.com"/></li>
                         </ul>
                     </li>

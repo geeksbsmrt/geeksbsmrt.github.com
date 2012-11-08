@@ -1,4 +1,4 @@
-html { 
+#add { 
 	background: url(../img/field.jpg) no-repeat center center fixed; 
 	-webkit-background-size: cover;
     width: auto;
@@ -6,28 +6,17 @@ html {
 body {
     font-family: "Arial New", Arial, sans-serif;
 }
-h1 {
-    text-shadow: 2px 2px grey;
-    margin: 0px;
-}
-h2 {
-    text-shadow: 2px 2px grey;
+h1, h2 {
+	color: #ffff56;
+    text-shadow: 2px 2px #ff0000;
     margin: 0px;
 }
 textarea {
     display: block;
 }
-ul {
+
+form ul {
     list-style: none;
-}
-#data ul {
-    padding: 10px;
-}
-#data ul li {
-    list-style: disc;
-}
-#data ul ul li {
-    list-style: circle;
 }
 .required {
     outline: red solid 2px;
@@ -39,3 +28,22 @@ fieldset {
 legend {
     font-weight: bold;
 }
+#data > ul > li {
+	margin-bottom: 25px;
+}
+#errors {
+	background: red;
+	color: white;
+}
+#index {
+	background: url(../img/fieldlights.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+}
+#index div {
+	margin: 10px;
+}
+.slider {
+	display: inline;
+}
+a:link {color: #ffff56;}
+a:visited {color: #ff0000;}
