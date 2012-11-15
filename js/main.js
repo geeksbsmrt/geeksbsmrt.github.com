@@ -1,15 +1,15 @@
 //Adam Crawford
 //VFW 1211
-//WebApp Part 3
-//11/7/2012
+//WebApp Part 4
+//11/14/2012
 
 document.addEventListener("DOMContentLoaded", function(){
 
 //shorthand getElementByID
 var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 	getID = function (element) {
-	var selected = document.getElementById(element);
-	return selected;
+		var selected = document.getElementById(element);
+		return selected;
 	},
 //short getElementsByTagName
 	getTag = function (tag) {
@@ -25,7 +25,7 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 		};
 	},
 	isComp = function () {
-	return getID('gcomp').checked;
+		return getID('gcomp').checked;
 	},
 // Populate Select Element
 	populateAges = function (ages) {
@@ -72,13 +72,20 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 				getID('display').style.display = "none";
 				getID('addNew').style.display = "inline";
 				getID('errors').style.display = "none";
+				getID('content').style.display = "none";
 				break;
 			case "off":
+				var dataDiv = getID('data');
 				getID('createGame').style.display = "block";
 				getID('clear').style.display = "inline";
 				getID('display').style.display = "inline";
-				getID('data').style.display = "none";
+				//Changed display=none for Data div to remove it from DOM
+				//If I was clicking edit, didn't make changes, clicked Display,
+				//Clicked Edit again, it added another div with the ID of Data
+				dataDiv.parentElement.removeChild(dataDiv);
 				getID('addNew').style.display = "none";
+				getID('errors').style.display = "block";
+				getID('content').style.display = "block";
 				break;
 			default:
 				return false;
@@ -116,7 +123,7 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 		values.gField = ["Game Field: ", getID('gfield').value];
 		values.gAge = ["Age Group: ", getID('ageGroup').value];
 		values.gGender = ["Gender: ", gameGender()];
-		values.gComp = ["Is Competetive: ", isComp()];
+		values.gComp = ["Is Competitive: ", isComp()];
 		values.gHome = ["Home Team: ", getID('ghome').value];
 		values.gAway = ["Away Team: ", getID('gaway').value];
 		values.gComments = ["Comments: ", getID('gspec').value];
@@ -139,8 +146,30 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 			alert("Updated Game information.");
 		};
 	},
+	displayJSON = function () {
+		for (var i in json) {
+			var UUID = Math.floor(Math.random()*10000000000001);
+			localStorage.setItem(UUID, JSON.stringify(json[i]));
+		};
+	},
+	addImage = function (createSubList, genderImage, key) {
+		var imgLi = document.createElement('li'),
+			createImgSubList = document.createElement('ul'),
+			gendImg = document.createElement('img');
+		gendImg.setAttribute("src", "img/" + genderImage + ".png");
+		createSubList.appendChild(createImgSubList);
+		imgLi.setAttribute("id", key + "dataImages");
+		createImgSubList.setAttribute("class", "noListStyle");
+		gendImg.setAttribute("height", "32px");
+		createImgSubList.appendChild(imgLi);
+		imgLi.appendChild(gendImg);
+	},
 	displayData = function () {
 		toggleDisplay("on");
+		if (localStorage.length === 0) {
+			alert("There are no matches stored.  Using default data.");
+			displayJSON();
+		};
 		var createDiv = document.createElement("div"),
 			createList = document.createElement("ul");
 		createDiv.setAttribute("id", "data");
@@ -150,17 +179,98 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 		for (i=0,j=localStorage.length; i<j; i++) {
 			var createLi = document.createElement("li"),
 				linksLi = document.createElement("li"),
-				key = localStorage.key(i),
-				value = localStorage.getItem(key),
+				objkey = localStorage.key(i),
+				value = localStorage.getItem(objkey),
 				obj = JSON.parse(value),
 				createSubList = document.createElement("ul");
 			createList.appendChild(createLi);
 			createLi.appendChild(createSubList);
+			addImage(createSubList, obj.gGender[1], objkey);
 			for (var k in obj) {
 				var createSubLi = document.createElement("li"),
 					liText = obj[k][0] + " " + obj[k][1];
-				createSubList.appendChild(createSubLi);
-				createSubLi.innerHTML = liText;
+				if (k === "ref") {
+					var createRefUl = document.createElement('ul');
+					createSubList.appendChild(createSubLi);
+					createSubLi.innerHTML = liText;
+					createSubList.appendChild(createRefUl);
+				} else if (k === "ar1") {
+					var createAR1Ul = document.createElement('ul');
+					createSubList.appendChild(createSubLi);
+					createSubLi.innerHTML = liText;
+					createSubLi.appendChild(createAR1Ul);
+				} else if (k === "ar2") {
+					var createAR2Ul = document.createElement('ul');
+					createSubList.appendChild(createSubLi);
+					createSubLi.innerHTML = liText;
+					createSubLi.appendChild(createAR2Ul);
+				} else if (k === "refGrd" || k === "refYrs" || k === "refEml") {
+					var createRefLi = document.createElement('li'),
+						refEmailLink = document.createElement("a");
+					if (k === "refYrs" && obj[k][1] === "10") {
+						createRefUl.appendChild(createRefLi);
+						createRefLi.innerHTML = "Years Reffing: 10 or more";
+					} else if (k === "refEml") {
+						refEmailLink.href="mailto:" + obj[k][1];
+						refEmailLink.innerHTML = obj[k][1];
+						createRefUl.appendChild(createRefLi);
+						createRefLi.innerHTML = obj[k][0];
+						createRefLi.appendChild(refEmailLink);
+					} else {
+						createRefUl.appendChild(createRefLi);
+						createRefLi.innerHTML = liText;
+					}
+				} else if (k === "ar1Grd" || k === "ar1Yrs" || k === "ar1Eml") {
+					var createAR1Li = document.createElement('li'),
+						ar1EmailLink = document.createElement("a");
+					if (k === "ar1Yrs" && obj[k][1] === "10") {
+						createAR1Ul.appendChild(createAR1Li);
+						createAR1Li.innerHTML = "Years Reffing: 10 or more";
+					} else if (k === "ar1Eml") {
+						ar1EmailLink.href="mailto:" + obj[k][1];
+						ar1EmailLink.innerHTML = obj[k][1];
+						createAR1Ul.appendChild(createAR1Li);
+						createAR1Li.innerHTML = obj[k][0];
+						createAR1Li.appendChild(ar1EmailLink);
+					} else {
+						createAR1Ul.appendChild(createAR1Li);
+						createAR1Li.innerHTML = liText;
+					}
+				} else if (k === "ar2Grd" || k === "ar2Yrs" || k === "ar2Eml") {
+					var createAR2Li = document.createElement('li'),
+						ar2EmailLink = document.createElement("a");
+					if (k === "ar2Yrs" && obj[k][1] === "10") {
+						createAR2Ul.appendChild(createAR2Li);
+						createAR2Li.innerHTML = "Years Reffing: 10 or more";
+					} else if (k === "ar2Eml") {
+						ar2EmailLink.href="mailto:" + obj[k][1];
+						ar2EmailLink.innerHTML = obj[k][1];
+						createAR2Ul.appendChild(createAR2Li);
+						createAR2Li.innerHTML = obj[k][0];
+						createAR2Li.appendChild(ar2EmailLink);
+					} else {
+						createAR2Ul.appendChild(createAR2Li);
+						createAR2Li.innerHTML = liText;
+					}
+				} else if (k === "gComp") {
+					if (obj[k][1].toString() === "true") {
+						var createImgSublist = getID(objkey + "dataImages"),
+							imgLi = document.createElement('li'),
+							compImg = document.createElement('img');
+						compImg.setAttribute("src", "img/star.png");
+						compImg.setAttribute("height", "16px");
+						compImg.setAttribute("align", "top");
+						createSubList.appendChild(createSubLi);
+						createSubLi.innerHTML = liText;
+						createImgSublist.appendChild(compImg);
+					} else {
+						createSubList.appendChild(createSubLi);
+						createSubLi.innerHTML = liText;
+					}
+				} else {
+					createSubList.appendChild(createSubLi);
+					createSubLi.innerHTML = liText;
+				};
 				linksLi.setAttribute("id", "modifyLinks");
 				createSubList.appendChild(linksLi);
 			};
@@ -170,47 +280,9 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 	clearData = function () {
 		localStorage.clear();
 		alert("Cleared");
+		window.location = "#";
 		window.location.reload();
 		return false;
-	},
-	editMatch = function () {
-		var data = localStorage.getItem(this.key),
-			values = JSON.parse(data),
-			radios = document.forms[0].gender;
-		toggleDisplay("off");
-		getID('gdate').value = values.gDate[1];
-		getID('gtime').value = values.gTime[1];
-		getID('gfield').value = values.gField[1];
-		getID('ageGroup').value = values.gAge[1];
-		for (i = 0, j = radios.length; i<j; i++) {
-			if (radios[i].value === "Boys" && values.gGender[1] === "Boys") {
-				radios[i].setAttribute("checked");
-			} else if (radios[i].value === "Girls" && values.gGender[1] === "Girls") {
-				radios[i].setAttribute("checked");
-			};
-		};
-		if (values.gComp[1]) {
-			getID('gcomp').setAttribute("checked");
-		};
-		getID('ghome').value = values.gHome[1];
-		getID('gaway').value = values.gAway[1];
-		getID('gspec').value = values.gComments[1];
-		getID('refname').value = values.ref[1];
-		getID('refgrade').value = values.refGrd[1];
-		getID('refyrs').value = values.refYrs[1];
-		getID('refemail').value = values.refEml[1];
-		getID('ar1name').value = values.ar1[1];
-		getID('ar1grade').value = values.ar1Grd[1];
-		getID('ar1yrs').value = values.ar1Yrs[1];
-		getID('ar1email').value = values.ar1Eml[1];
-		getID('ar2name').value = values.ar2[1];
-		getID('ar2grade').value = values.ar2Grd[1];
-		getID('ar2yrs').value = values.ar2Yrs[1];
-		getID('ar2email').value = values.ar2Eml[1];
-		getID('submit').value = "Edit Match";
-		var editSubmit = getID('submit');
-		editSubmit.addEventListener("click", validate);
-		editSubmit.key = this.key;
 	},
 	validate = function (e) {
 		var getDate = getID('gdate'),
@@ -311,10 +383,51 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 				errMsg.appendChild(txt);
 			};
 			e.preventDefault();
+			window.location = "#errors"
 			return false;
 		} else {
 			saveData(this.key)
 		};
+	},
+	editMatch = function () {
+		var data = localStorage.getItem(this.key),
+			values = JSON.parse(data),
+			radios = document.forms[0].gender;
+		toggleDisplay("off");
+		getID('gdate').value = values.gDate[1];
+		getID('gtime').value = values.gTime[1];
+		getID('gfield').value = values.gField[1];
+		getID('ageGroup').value = values.gAge[1];
+		for (i = 0, j = radios.length; i<j; i++) {
+			if (radios[i].value === "Boys" && values.gGender[1] === "Boys") {
+				radios[i].setAttribute("checked");
+			} else if (radios[i].value === "Girls" && values.gGender[1] === "Girls") {
+				radios[i].setAttribute("checked");
+			};
+		};
+		if (values.gComp[1]) {
+			getID('gcomp').setAttribute("checked");
+		};
+		getID('ghome').value = values.gHome[1];
+		getID('gaway').value = values.gAway[1];
+		getID('gspec').value = values.gComments[1];
+		getID('refname').value = values.ref[1];
+		getID('refgrade').value = values.refGrd[1];
+		getID('refyrs').value = values.refYrs[1];
+		getID('refemail').value = values.refEml[1];
+		getID('ar1name').value = values.ar1[1];
+		getID('ar1grade').value = values.ar1Grd[1];
+		getID('ar1yrs').value = values.ar1Yrs[1];
+		getID('ar1email').value = values.ar1Eml[1];
+		getID('ar2name').value = values.ar2[1];
+		getID('ar2grade').value = values.ar2Grd[1];
+		getID('ar2yrs').value = values.ar2Yrs[1];
+		getID('ar2email').value = values.ar2Eml[1];
+		getID('submit').value = "Edit Match";
+		var editSubmit = getID('submit');
+		editSubmit.addEventListener("click", validate);
+		editSubmit.key = this.key;
+		initSlider();
 	},
 	deleteMatch = function () {
 		var ask = confirm("Delete this match?");
@@ -333,13 +446,11 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 			sliderValue = function (slider, div) {
 				var divID = getID(div);
 				if (slider.value === "0") {
-					divID.innerHTML = " Less than a year";
+					divID.innerHTML = " Less than one";
 				} else if (slider.value === "10") {
-					divID.innerHTML = " 10 or more years";
-				} else if (slider.value === "1") {
-				divID.innerHTML = slider.value + " year";
+					divID.innerHTML = " 10 or more";
 				} else {
-				divID.innerHTML = " " + slider.value + " years";
+					divID.innerHTML = " " + slider.value;
 				};
 			};
 		refslider.addEventListener("change", function(){sliderValue(refslider, "refSliderText")});
@@ -349,10 +460,16 @@ var	ageGroups = ["Select", "U6", "U8", "U10", "U12", "U14", "U18"],
 		sliderValue(ar1slider, "ar1SliderText");
 		sliderValue(ar2slider, "ar2SliderText");
 	},
+	hash = function () {
+		if (window.location.hash) {
+			if (window.location.hash.substr(1) === "show") {
+				displayData();
+			};
+		};
+	},
 	displaySchedule = getID('display'),
 	clearSchedule = getID('clear'),
 	save = getID('submit')
-	
 ;
 // Call Functions
 populateAges(ageGroups);
@@ -360,5 +477,6 @@ addBlur();
 displaySchedule.addEventListener("click", displayData);
 clearSchedule.addEventListener("click", clearData);
 save.addEventListener("click", validate);
-initSlider()
+initSlider();
+hash();
 });

@@ -38,9 +38,16 @@ legend {
 #index {
 	background: url(../img/fieldlights.jpg) no-repeat center center fixed; 
 	-webkit-background-size: cover;
+	text-align: center;
 }
-#index div {
-	margin: 10px;
+#index img {
+	height: 100px;
+}
+.noListStyle {
+	list-style: none;
+	display: inline;
+	margin: 0px;
+	padding: 0px;
 }
 .slider {
 	display: inline;

@@ -2,8 +2,8 @@
     <!--
     Adam Crawford
     VFW 1211
-    WebApp Part 3
-    11/4/2012
+    WebApp Part 4
+    11/14/2012
     -->
 <html>
     <head>
@@ -25,24 +25,32 @@
                 <h2>Allows creation of a new match and referee assignment</h2>
             </hgroup>
         </header>
+        <div id="topNav">
+            <a href="#" id="display">Display Schedule</a>
+            <a href="#" id="clear">Clear Schedule</a>
+            <a href="additem.html" id="addNew" style="display: none;">Add New Match</a>
+        </div>
+        <div id="content">
+            <p>Fields marked with * are required.</p>
+        </div>
         <ul id="errors"></ul>
                 <form action="#" method="post" id="createGame">
             <fieldset>
                 <legend>Game Information</legend>
                 <ul>
-                    <li><label for="gdate">Game Date: </label><input type="date" id="gdate" /></li>
-                    <li><label for="gtime">Game Time: </label><input type="time" id="gtime" /></li>
-                    <li><label for="gfield">Game Field: </label><input type="text" id="gfield" /></li>
-                    <li id="gage"><label for="gage">Age Group: </label></li>
-                    <li>Gender:
+                    <li><label for="gdate">*Game Date: </label><input type="date" id="gdate" /></li>
+                    <li><label for="gtime">*Game Time: </label><input type="time" id="gtime" /></li>
+                    <li><label for="gfield">*Game Field: </label><input type="text" id="gfield" /></li>
+                    <li id="gage"><label for="gage">*Age Group: </label></li>
+                    <li>*Gender:
                         <ul>
                             <li><input type="radio" value="Boys" id="boys" name="gender" /><label for="boys"> Boys</label></li>
                             <li><input type="radio" value="Girls" id="girls" name="gender" /><label for="girls"> Girls</label></li>
                         </ul>
                     </li>
                     <li><label for="gcomp">Competitive </label><input type="checkbox" value="Competitive" id="gcomp" /></li>
-                    <li><label for="ghome">Home Team: </label><input type="text" id="ghome" /></li>
-                    <li><label for="gaway">Away Team: </label><input type="text" id="gaway" /></li>
+                    <li><label for="ghome">*Home Team: </label><input type="text" id="ghome" /></li>
+                    <li><label for="gaway">*Away Team: </label><input type="text" id="gaway" /></li>
                     <li><label for="gspec">Any special considerations for this match? </label><textarea id="gspec"></textarea></li>
                 </ul>
             </fieldset>
@@ -51,26 +59,26 @@
                 <ul>
                     <li>Referee:
                         <ul>
-                            <li><label for="refname">Name: </label><input type="text" id="refname" /></li>
-                            <li><label for="refgrade">Grade: </label><input type="number" id="refgrade" min="1" max="15" value="8"/></li>
-                            <li><label for="refyrs">Years of Experience: </label><input type="range" id="refyrs" min="0" max="10" step="1" value="0" /><div id="refSliderText" class="slider"></div></li>
-                            <li><label for="refemail">Email: </label><input type="email" id="refemail" placeholder="email@domain.com"/></li>
+                            <li><label for="refname">*Name: </label><input type="text" id="refname" /></li>
+                            <li><label for="refgrade">*Grade: </label><input type="number" id="refgrade" min="1" max="15" value="8"/></li>
+                            <li><label for="refyrs">*Years of Experience: </label><input type="range" id="refyrs" min="0" max="10" step="1" value="0" /><div id="refSliderText" class="slider"></div></li>
+                            <li><label for="refemail">*Email: </label><input type="email" id="refemail" placeholder="email@domain.com"/></li>
                         </ul>
                     </li>
                     <li>Assistant Referee 1:
                         <ul>
-                            <li><label for="ar1name">Name: </label><input type="text" id="ar1name" /></li>
-                            <li><label for="ar1grade">Grade: </label><input type="number" id="ar1grade" min="1" max="15" value="8"/></li>
-                            <li><label for="ar1yrs">Years of Experience: </label><input type="range" id="ar1yrs" min="0" max="10" step="1" value="0" /><div id="ar1SliderText" class="slider"></div></li>
-                            <li><label for="ar1email">Email: </label><input type="email" id="ar1email" placeholder="email@domain.com"/></li>
+                            <li><label for="ar1name">*Name: </label><input type="text" id="ar1name" /></li>
+                            <li><label for="ar1grade">*Grade: </label><input type="number" id="ar1grade" min="1" max="15" value="8"/></li>
+                            <li><label for="ar1yrs">*Years of Experience: </label><input type="range" id="ar1yrs" min="0" max="10" step="1" value="0" /><div id="ar1SliderText" class="slider"></div></li>
+                            <li><label for="ar1email">*Email: </label><input type="email" id="ar1email" placeholder="email@domain.com"/></li>
                         </ul>
                     </li>
                     <li>Assistant Referee 2:
                         <ul>
-                            <li><label for="ar2name">Name: </label><input type="text" id="ar2name" /></li>
-                            <li><label for="ar2grade">Grade: </label><input type="number" id="ar2grade" min="1" max="15" value="8"/></li>
-                            <li><label for="ar2yrs">Years of Experience: </label><input type="range" id="ar2yrs" min="0" max="10" step="1" value="0" /><div id="ar2SliderText" class="slider"></div></li>
-                            <li><label for="ar2email">Email: </label><input type="email" id="ar2email" placeholder="email@domain.com"/></li>
+                            <li><label for="ar2name">*Name: </label><input type="text" id="ar2name" /></li>
+                            <li><label for="ar2grade">*Grade: </label><input type="number" id="ar2grade" min="1" max="15" value="8"/></li>
+                            <li><label for="ar2yrs">*Years of Experience: </label><input type="range" id="ar2yrs" min="0" max="10" step="1" value="0" /><div id="ar2SliderText" class="slider"></div></li>
+                            <li><label for="ar2email">*Email: </label><input type="email" id="ar2email" placeholder="email@domain.com"/></li>
                         </ul>
                     </li>
                 </ul>
@@ -78,9 +86,7 @@
             <input type="hidden" value="true" />
             <input type="submit" value="Create Game" id="submit" />
         </form>
-        <a href="#" id="display">Display Schedule</a>
-        <a href="#" id="clear">Clear Schedule</a>
-        <a href="additem.html" id="addNew" style="display: none;">Add New Game</a>
-        <script src="js/main.js"></script>
+        <script src="js/json.js" type="text/javascript"></script>
+        <script src="js/main.js" type="text/javascript"></script>
     </body>
 </html>
